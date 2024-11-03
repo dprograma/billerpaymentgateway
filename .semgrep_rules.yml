@@ -1,0 +1,196 @@
+rules:
+  # Security Rules
+  - id: django.db.execute_injection
+    metadata:
+      category: Security
+    languages: [python]
+    severity: WARNING
+    message: |
+      Potentially unsafe use of database query. Please use parameterized queries to prevent SQL injection.
+    pattern: |
+      query = "SELECT * FROM users WHERE username='" + username + "'"
+
+  - id: django.middleware.csrf.disable
+    metadata:
+      category: Security
+    languages: [python]
+    severity: ERROR
+    message: |
+      Cross-Site Request Forgery (CSRF) protection is disabled. Enable CSRF protection in Django settings.
+    pattern: |
+      MIDDLEWARE = [
+          'django.middleware.csrf.CsrfViewMiddleware',
+      ]
+
+  - id: django.security.csrf_used
+    metadata:
+      category: Security
+    languages: [python]
+    severity: ERROR
+    message: |
+      CSRF middleware is not being used. Make sure to include 'django.middleware.csrf.CsrfViewMiddleware' in Django settings.
+    pattern: |
+      # CSRF Middleware is missing
+      MIDDLEWARE = [
+          # 'django.middleware.csrf.CsrfViewMiddleware',
+      ]
+
+  # Best Practices
+  - id: django.ForeignKey.on_delete_missing
+    metadata:
+      category: Best Practices
+    languages: [python]
+    severity: WARNING
+    message: |
+      Consider adding 'on_delete' option to ForeignKey fields to specify behavior on related model deletion.
+    pattern: |
+      class MyModel(models.Model):
+          user = models.ForeignKey(User)  # Missing on_delete option
+
+  - id: django.SECRET_KEY.exposure
+    metadata:
+      category: Best Practices
+    languages: [python]
+    severity: ERROR
+    message: |
+      Potential exposure of Django SECRET_KEY. Make sure to keep SECRET_KEY confidential and not include it in version control.
+    pattern: |
+      SECRET_KEY = 'your_secret_key_here'
+
+  # Code Quality
+  - id: python.print
+    metadata:
+      category: Code Quality
+    languages: [python]
+    severity: WARNING
+    message: |
+      Found 'print' statement. Consider using 'logging' module for better logging and debugging.
+    pattern: |
+      print("Debugging info")
+
+  - id: django.DateTimeField.auto_now_deprecated
+    metadata:
+      category: Code Quality
+    languages: [python]
+    severity: WARNING
+    message: |
+      Using 'auto_now=True' in DateTimeField can cause issues with testing and migrations. Consider using 'auto_now_add=True' or set the value manually.
+    pattern: |
+      my_datetime_field = models.DateTimeField(auto_now=True)
+
+  # Django Models
+  - id: django.models.ImageField.performance_issue
+    metadata:
+      category: Django Models
+    languages: [python]
+    severity: WARNING
+    message: |
+      Use of ImageField can lead to performance issues. Consider using a dedicated media storage solution.
+    pattern: |
+      my_image_field = models.ImageField(upload_to='images/')
+
+  # Django Templates
+  - id: django.templates.inline_js
+    metadata:
+      category: Django Templates
+    languages: [html]
+    severity: WARNING
+    message: |
+      Avoid placing inline JavaScript in templates for better security. Move JavaScript code to static files.
+    pattern: |
+      <script>var data = {{ my_data }}</script>
+
+  - id: django.templates.inline_css
+    metadata:
+      category: Django Templates
+    languages: [html]
+    severity: WARNING
+    message: |
+      Avoid placing inline CSS styles in templates. Move CSS code to static files.
+    pattern: |
+      <style>body { font-size: 14px; }</style>
+
+  # Django Forms
+  - id: django.forms.EmailField.max_length_missing
+    metadata:
+      category: Django Forms
+    languages: [python]
+    severity: WARNING
+    message: |
+      Use of EmailField without setting 'max_length' can lead to issues with database schema migrations.
+    pattern: |
+      email = forms.EmailField()  # Missing max_length option
+
+  # Django Views
+  - id: django.JsonResponse.error_handling
+    metadata:
+      category: Django Views
+    languages: [python]
+    severity: WARNING
+    message: |
+      Use of 'JsonResponse' without proper error handling can lead to unexpected behavior. Handle potential errors explicitly.
+    pattern: |
+      return JsonResponse(data)
+
+  # Django URLs
+  - id: django.templates.hardcoded_urls
+    metadata:
+      category: Django URLs
+    languages: [html]
+    severity: WARNING
+    message: |
+      Avoid using hardcoded URLs in templates. Use the {% url %} template tag for better maintainability.
+    pattern: |
+      <a href="/about/">About Us</a>
+
+  # Django Settings
+  - id: django.settings.DEBUG_disabled
+    metadata:
+      category: Django Settings
+    languages: [python]
+    severity: ERROR
+    message: |
+      DEBUG mode should be disabled in production settings.
+    pattern: |
+      DEBUG = True
+
+  - id: django.settings.ALLOWED_HOSTS_wildcard
+    metadata:
+      category: Django Settings
+    languages: [python]
+    severity: ERROR
+    message: |
+      Avoid using wildcard (*) in ALLOWED_HOSTS. Specify allowed hosts explicitly.
+    pattern: |
+      ALLOWED_HOSTS = ['*']
+
+  - id: django.settings.CSRF_COOKIE_SECURE_disabled
+    metadata:
+      category: Django Settings
+    languages: [python]
+    severity: ERROR
+    message: |
+      CSRF_COOKIE_SECURE should be set to True for better security in production.
+    pattern: |
+      CSRF_COOKIE_SECURE = False
+
+  - id: django.settings.SESSION_COOKIE_SECURE_disabled
+    metadata:
+      category: Django Settings
+    languages: [python]
+    severity: ERROR
+    message: |
+      SESSION_COOKIE_SECURE should be set to True for better security in production.
+    pattern: |
+      SESSION_COOKIE_SECURE = False
+
+  # Django Migrations
+  - id: django.migrations.RunPython.noop_issue
+    metadata:
+      category: Django Migrations
+    languages: [python]
+    severity: ERROR
+    message: |
+      Use of 'migrations.RunPython.noop' can cause issues with migrations. Implement proper data migrations instead.
+    pattern: |
+      migrations.RunPython(noop)

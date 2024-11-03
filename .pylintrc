@@ -1,0 +1,47 @@
+[MASTER]
+
+# Specify additional Python builtins
+extension-pkg-whitelist = _tkinter
+
+[MESSAGES CONTROL]
+
+# Enable or disable specific message categories
+disable = 
+    missing-docstring,
+    invalid-name,
+    unused-import,
+    f-string-without-interpolation,
+    logging-fstring-interpolation,
+    no-else-return,
+    line-too-long,
+    unused-variable,
+    missing-timeout,
+    too-many-locals,
+    request-without-timeout,
+
+[BASIC]
+
+# Specify the maximum line length
+max-line-length = 100
+
+[VARIABLES]
+
+# Define a list of additional names considered predefined
+additional-builtins = _
+
+[FORMAT]
+
+# Specify the expected format for docstrings
+expected-docstring-format = google
+
+[TYPECHECK]
+
+# Enable type checking using Mypy
+# init-hook = 'import sys; sys.path.append("."); import mypy; mypy.patch_builtin_type_checkers()'
+generated-members = signals
+ignored-modules = migrations
+
+[DESIGN]
+
+# Specify the maximum number of instance attributes allowed
+max-attributes = 12

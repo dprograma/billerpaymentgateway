@@ -1,0 +1,21 @@
+{% load static %}
+{% include 'partials/head.html' %}
+
+<div class="container">
+    <div class="row justify-content-center" style="height: 100vh;">
+        <form method="post" action="{% url 'reset_pass' %}" class="border p-3 rounded-2 align-self-center" style="width: 40%;">
+            <h5>Reset Password</h5>
+            <hr />
+            <div class="form-group mb-3">
+                <input type="password" name="password" id="password" placeholder="Password" class="form-control" required>
+            </div>
+            <div class="form-group mb-3">
+                <input type="password" name="confirm" id="confirm" placeholder="Confirm Password" class="form-control" required>
+            </div>
+            <input type="hidden" name="uid" value={{id}}>
+            <div class="form-group mb-3">
+                <input type="submit" value="Reset Password" class="btn btn-danger form-control">
+            </div>
+        </form>
+    </div>
+</div>

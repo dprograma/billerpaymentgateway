@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="card-title">Activation Email Sent</h2>
+            <p class="card-text">An activation email has been sent to your email address. Please check your inbox and follow the instructions to activate your account.</p>
+            <p class="card-text">If you don't receive the email within a few minutes, please check your spam folder.</p>
+            <p class="card-text">If you need any assistance, please contact our support team.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Back to Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

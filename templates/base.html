@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% include 'partials/head.html' %}
+<body>
+   {% comment %} {% include 'partials/header.html' %} {% endcomment %}
+   {% block content %} {% endblock %}
+   {% comment %} {% include 'partials/footer.html' %} {% endcomment %}
+   {% include 'partials/extrascripts.html' %}
+   {% include 'partials/back-to-top.html' %}
+</body>
+</html>

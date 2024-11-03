@@ -1,0 +1,77 @@
+# .prospector.yml
+
+# Specify the directories to be analyzed
+directories:
+  - merchantservice
+  - transactions
+  - userservice
+  - walletservice
+  - paymentgatewayservice
+  - kyc
+  - tests
+
+# Set the tool profiles to be used
+tools:
+  pep8:
+    enabled: true
+  mccabe:
+    enabled: true
+  radon:
+    enabled: true
+  dodgy:
+    enabled: true
+  xenon:
+    enabled: true
+  bandit:
+    enabled: true
+  vulture:
+    enabled: true
+  pylint:
+    enabled: true
+
+# Configuration for each tool
+
+pep8:
+  max-line-length: 100
+
+mccabe:
+  min: 5
+
+radon:
+  cc_min: A
+  show_closures: true
+
+pylint:
+  config_file: .pylintrc
+  disable:
+    - missing-docstring
+
+# File Extensions to Analyze
+file_types:
+  - .py
+  - .pyi
+
+# Ignored Files or Directories
+ignore:
+  - venv/
+  - static/
+  - migrations/
+  - staticfiles/
+  - amaps/
+  - coverage_report/
+  - .mypy_cache/
+  - .pytest_cache/
+
+# Output Formats
+output:
+  format: text
+
+# Output Directory for Reports
+output-directory: prospector_reports/
+
+# Fail Thresholds
+fail-under: C
+fail-on: error
+
+# Other Options
+quiet: true

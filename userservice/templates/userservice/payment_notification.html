@@ -1,0 +1,82 @@
+{% load static %}
+{% load l10n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo img {
+            max-width: 200px;
+        }
+        
+        .message {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .details {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .support {
+            font-size: 14px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .support p {
+            margin: 5px 0;
+        }
+        
+        .support a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="Your Logo">
+        </div>
+        <div class="message">
+            <p>Hello {{ user }},</p>
+            <p>Your payment for the following service has been successfully processed:</p>
+        </div>
+        <div class="details">
+            <p><strong>Service Paid For:</strong> {{ service_name }}</p>
+            <p><strong>Amount Paid:</strong> {{ amount|localize  }}</p>
+            <p><strong>Transaction ID:</strong> {{ transaction_id }}</p>
+            <p><strong>Payment Method:</strong> {{ payment_method }}</p>
+            <p><strong>Date and Time:</strong> {{ datetime }}</p>
+            <p><strong>Reference Number:</strong> {{ reference_number }}</p>
+        </div>
+        <div class="support">
+            <p>If you have any questions or concerns, please <a href="mailto:support@example.com">contact support</a>.</p>
+            <p>Thank you for your payment!</p>
+            <p>The {{ site_name }} Team</p>
+        </div>
+    </div>
+</body>
+</html>

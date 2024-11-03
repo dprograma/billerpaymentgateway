@@ -1,0 +1,132 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% load socialaccount %} 
+{% block title %}User Registration | Ojapay IBP Super App{% endblock %} 
+
+{% block content%}
+
+<section class="contact" style="background-color: #37517e">
+  <div class="container" data-aos="fade-up">
+    <div class="row justify-content-center" style="margin-top: 60px">
+      <div class="formlayout col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch align-self-center">
+        <form action="{% url 'signup' %}" method="post" role="form" class="php-email-form">
+          {% csrf_token %} 
+          {% include 'partials/alert.html' %}
+          <h3 class="text-center">Sign Up</h3>
+          <hr />
+          <div class="row mb-3">
+            <div class="col-6 text-center">
+              <button class="btn btn-light text-uppercase tab-btn active w-100 rounded-0" data-tab="email">Signup With Email</button>
+            </div>
+            <div class="col-6 text-center">
+              <button class="btn btn-light text-uppercase tab-btn w-100 rounded-0" data-tab="mobile">Signup With Mobile</button>
+            </div>
+          </div>
+          <div class="form-group col-md-12 email-input">
+            <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+            <input type="email" id="{{ form.email.id_for_label }}" class="form-control {% if form.email.errors %}is-invalid{% endif %}" name="{{ form.email.html_name }}" required />
+            {% if form.email.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.email.errors %} {{ error }} {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-12 mobile-input" style="display: none;">
+            <label for="{{ form.phone_number.id_for_label }}" class="form-label">Mobile Phone</label>
+            <input type="tel" id="{{ form.phone_number.id_for_label }}" class="form-control {% if form.phone_number.errors %}is-invalid{% endif %}" name="{{ form.phone_number.html_name }}" />
+            {% if form.phone_number.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.phone_number.errors %} {{ error }} {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-12">
+            <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+            <input type="text" id="{{ form.username.id_for_label }}" class="form-control {% if form.username.errors %}is-invalid{% endif %}" name="{{ form.username.html_name }}" pattern="[a-zA-Z0-9]+" required />
+            {% if form.username.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.username.errors %} {{ error }} {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-12">
+            <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+            <input type="password" id="{{ form.password1.id_for_label }}" class="form-control {% if form.password1.errors %}is-invalid{% endif %}" name="{{ form.password1.html_name }}" pattern="(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}" title="Enter at least 8 characters, 1 uppercase letter, 1 number and a special character!" required />
+            {% if form.password1.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.password1.errors %} {{ error }} {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-12">
+            <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+            <input type="password" id="{{ form.password2.id_for_label }}" class="form-control {% if form.password2.errors %}is-invalid{% endif %}" name="{{ form.password2.html_name }}" required />
+            {% if form.password2.errors %}
+            <div class="invalid-feedback">
+              {% for error in form.password2.errors %} {{ error }} {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="d-grid gap-2">
+            <input type="hidden" id="signup-tab-value" name="signup_tab_value" value="email" />
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign Up</button>
+
+            <!-- Add sign-in and forgot password links -->
+
+            <p class="text-center">
+              Already have an account? <a href="{% url 'login' %}">Sign in</a>
+            </p>
+
+            <!-- Add social network sign-up buttons -->
+            <div class="d-flex align-items-center my-4">
+              <div class="flex-grow-1 border-bottom"></div>
+              <p class="text-center fw-bold mx-3 mb-0">Or</p>
+              <div class="flex-grow-1 border-bottom"></div>
+            </div>
+
+            <div class="text-center">
+              <a href="{% provider_login_url 'google' %}" class="btn btn-link btn-floating mx-1"><i class="fab fa-google me-2"></i></a>
+              <a href="{% provider_login_url 'facebook' %}" class="btn btn-link btn-floating mx-1"><i class="fab fa-facebook-f mr-2"></i></a>
+              <a href="{% provider_login_url 'twitter' %}" class="btn btn-link btn-floating mx-1"><i class="fab fa-twitter mr-2"></i></a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{% static 'intl-tel-input/build/js/intlTelInput.js' %}"></script>
+<script>
+  var input = document.querySelector("#id_phone_number");
+  window.intlTelInput(input, {
+    utilsScript: "{% static 'intl-tel-input/build/js/utils.js' %}" 
+  });
+
+  // Handle tab selection and show/hide input fields
+  var emailTab = document.querySelector(".tab-btn[data-tab='email']");
+  var mobileTab = document.querySelector(".tab-btn[data-tab='mobile']");
+  var emailInput = document.querySelector(".email-input");
+  var mobileInput = document.querySelector(".mobile-input");
+  var signupTabValueInput = document.querySelector("#signup-tab-value");
+
+  emailTab.addEventListener("click", function(event) {
+    event.preventDefault();
+    emailTab.classList.add("active");
+    mobileTab.classList.remove("active");
+    emailInput.style.display = "block";
+    mobileInput.style.display = "none";
+    signupTabValueInput.value = "email";
+  });
+
+  mobileTab.addEventListener("click", function(event) {
+    event.preventDefault();
+    mobileTab.classList.add("active");
+    emailTab.classList.remove("active");
+    mobileInput.style.display = "block";
+    emailInput.style.display = "none";
+    signupTabValueInput.value = "mobile";
+  });
+</script>
+
+{% endblock %}

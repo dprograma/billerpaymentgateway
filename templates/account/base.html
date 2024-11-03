@@ -1,0 +1,38 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+  {% include 'partials/head.html' %}
+  <body>
+    {% include 'partials/header.html' %}
+    <div class="container" style="margin-top: 220px;"> 
+      <div class="col justify-content-center" >
+    {% block body %}
+
+    {% if messages %}
+    <div>
+      <strong>{% trans "Messages:" %}</strong>
+      <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    <div class="container border rounded-1 p-4 w-100 w-md-50 w-lg-50">
+    <div class="d-flex justify-content-center flex-column">
+    {% block content %}
+    {% endblock %}
+      </div>
+    </div>
+    {% endblock %}
+  </div>
+</div>
+    {% block extra_body %}
+    {% endblock %}
+    {% include 'partials/extrascripts.html' %}
+</div>
+</div>
+  </body>
+</html>

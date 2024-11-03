@@ -1,0 +1,59 @@
+ 
+{% load static %}
+
+{% block header %}
+<header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="{% url 'home' %}">OJAPAY IBP</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="assets/images/logo.png" alt="" class="img-fluid"></a>-->
+
+      {% if user.is_authenticated %}
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{% url 'home' %}#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#about">About</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Services</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#contact">Contact</a></li>
+            <div class="dropdown">
+              <a href="#"
+                class="dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton2"
+                data-mdb-toggle="dropdown"
+                aria-expanded="false"
+              >
+              <div class="profile-pic mr-3">
+                <img src="images/person_2.jpg" alt="Image">
+              </div>
+              <div class="profile-info">
+                <h6>{{ user.username }}</h6>
+              </div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                <li><a class="dropdown-item active" href="#"><span class="bx bx-user"></span> User Dashboard</a></li>
+                <li><a class="dropdown-item" href="#"><span class="bx bx-cog"></span>Settings</span></a></a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}"><span class="bx bx-log-out"></span>Log out</a></li>
+              </ul>
+            </div>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+      {% else %}
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{% url 'home' %}#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#about">About</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#services">Services</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'home' %}#contact">Contact</a></li>
+          <li><a class="getstarted scrollto" href="{% url 'signup' %}">Get Started</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+      {% endif %}
+
+    </div>
+  </header>
+  {% endblock %}
